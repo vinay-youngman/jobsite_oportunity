@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="view_jobsite_opprotunity_link" model="ir.ui.view">
-        <field name="name">jobsite.opprotunity.link</field>
+    <record id="view_jobsite_opportunity_link" model="ir.ui.view">
+        <field name="name">jobsite.opportunity.link</field>
         <field name="model">jobsite</field>
-        <field name="inherit_id" ref="jobsites.view_jobsite_create_form"/>
+        <field name="inherit_id" ref="jobsite.view_jobsite_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='button_box']" position="inside">
+            <xpath expr="//button[@name='action_view_jobsite_partner']" position="before">
                 <button class="oe_stat_button o_res_partner_tip_opp" type="object"
                         name="action_view_opportunity"
                         icon="fa-star"
                         groups="sales_team.group_sale_salesman"
-                        context="{'default_partner_id': active_id, 'default_type':'opportunity'}">
+                        context="{'default_jobsite_id': active_id, 'default_type': 'opportunity'}">
                     <field string="Opportunities" name="opportunity_count" widget="statinfo"/>
                 </button>
             </xpath>
         </field>
     </record>
-
 </odoo>

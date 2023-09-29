@@ -1,24 +1,18 @@
 from odoo import models, fields, api
 
-class jobsite_opportunity(models.Model):
+class JobsiteOpportunity(models.Model):
     _inherit = 'jobsite'
 
-
-
-    opportunity_id=fields.One2many(comodel_name='crm.lead',inverse_name='jobsite_id', string='OPPORTUNITY')
+    opportunity_ids = fields.One2many(comodel_name='crm.lead', inverse_name='jobsite_id', string='Opportunities')
     opportunity_count = fields.Integer("Opportunity", compute='_compute_opportunity_count')
 
-    @api.depends('opportunity_id')
+    @api.depends('opportunity_ids')
     def _compute_opportunity_count(self):
         for record in self:
-            record.opportunity_count = len(record.opportunity_id)
+            record.opportunity_count = len(record.opportunity_ids)
 
     def action_view_opportunity(self):
-        action = self.env['ir.actions.act_window']._for_xml_id('crm.crm_lead_opportunities')
-        action['context'] = {'active_test': False}
+        action = self.env.ref('crm.crm_lead_opportunities').read()[0]
+        action['context'] = {'default_jobsite_id': self.id}
         action['domain'] = [('jobsite_id', '=', self.id)]
-
         return action
-
-
-
