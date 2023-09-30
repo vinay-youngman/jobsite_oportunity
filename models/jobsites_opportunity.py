@@ -13,6 +13,5 @@ class JobsiteOpportunity(models.Model):
 
     def action_view_opportunity(self):
         action = self.env.ref('crm.crm_lead_opportunities').read()[0]
-        action['context'] = {'default_jobsite_id': self.id}
-        action['domain'] = [('jobsite_id', '=', self.id)]
+        action['domain'] = [('jobsite_id', '=', self._context.get('default_jobsite_id'))]
         return action
