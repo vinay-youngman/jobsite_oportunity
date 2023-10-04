@@ -3,7 +3,7 @@ from odoo import models, fields, api
 class JobsiteCustomer(models.Model):
     _inherit = 'jobsite'
 
-    patner_ids = fields.One2many(comodel_name='res.partner', inverse_name='customer_jobsite_id', string='Customers')
+    patner_ids = fields.Many2many(comodel_name='res.partner', string='Customers')
     partner_count = fields.Integer(string="Customers", compute='_compute_total_customers')
 
     @api.depends('patner_ids')
